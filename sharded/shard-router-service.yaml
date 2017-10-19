@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: shard-router-service
+spec:
+  selector:
+    app: shared-twemproxy
+  ports:
+    - protocol: TCP
+      port: 11211
+      targetPort: 11211

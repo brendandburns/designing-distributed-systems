@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: adapter-example-health
+  namespace: default
+spec:
+  containers:
+  - image: mysql
+    name: mysql
+  - image: brendanburns/mysql-adapter
+    name: adapter

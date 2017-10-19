@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: sharded-memcache
+spec:
+  serviceName: "memcache"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: memcache
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: memcache
+        image: memcached
+        ports:
+        - containerPort: 11211
+          name: memcache

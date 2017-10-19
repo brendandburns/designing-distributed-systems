@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: varnish-cache
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: varnish-cache
+    spec:
+      containers:
+      - name: cache
+        resources:
+          requests:
+            memory: 2Gi
+        image: brendanburns/varnish
+        command:
+        - varnishd
+        - -F
+        - -f
+        - /etc/varnish-config/default.vcl
+        - -a
+        - 0.0.0.0:8080
+        - -s
+        # This should match the 'memory' request above.
+        - malloc,2G
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: varnish
+          mountPath: /etc/varnish-config
+      volumes:
+      - name: varnish
+        configMap:
+          name: varnish-config

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: experiment-example
+spec:
+  containers:
+    # This is where the application container would go, for example
+    # - name: some-name
+    #   image: some-image
+    # This is the ambassador container
+    - name: nginx
+      image: nginx
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/nginx
+  volumes:
+    - name: config-volume
+      configMap:
+        name: experiment-config

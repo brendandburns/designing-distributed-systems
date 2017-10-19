@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-ssl
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: nginx-ssl
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 443
+        volumeMounts:
+        - name: conf
+          mountPath: /etc/nginx
+        - name: certs
+          mountPath: /etc/certs
+      volumes:
+      - name: conf
+        configMap:
+          # This is the ConfigMap for nginx we created previously
+          name: nginx-conf
+      - name: certs
+        secret:
+          # This is the secret we created above
+          secretName: ssl

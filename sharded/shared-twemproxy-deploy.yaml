@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: shared-twemproxy
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: shared-twemproxy
+    spec:
+      containers:
+      - name: twemproxy
+        image: ganomede/twemproxy
+        command: [ "nutcracker", "-c", "/etc/config/shared-nutcracker.yaml", "-v", "7", "-s", "6222" ]
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: shared-twem-config
