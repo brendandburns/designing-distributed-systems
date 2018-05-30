@@ -11,7 +11,7 @@ var store = map[string]string{}
 func compareAndSwap(key, nextValue, currentValue string) (bool, error) {
 	lock.Lock()
 	defer lock.Unlock()
-	if _, found := store[key]; found {
+	if _, found := store[key]; !found {
 		if len(currentValue) == 0 {
 			store[key] = nextValue
 			return true, nil
