@@ -1,4 +1,4 @@
-import twillio
+import twilio
 
 def two_factor(context):
   # Generate a random six digit code
@@ -8,7 +8,7 @@ def two_factor(context):
   user = context.json["user"]
   register_code_with_login_service(user, code)
   
-  # Use the twillio library to send texts
+  # Use the twilio library to send texts
   account = "my-account-sid"
   token = "my-token"
   client = twilio.rest.Client(account, token)
