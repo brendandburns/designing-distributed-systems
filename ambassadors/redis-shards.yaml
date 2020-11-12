@@ -1,14 +1,17 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: sharded-redis
 spec:
   serviceName: "redis"
   replicas: 3
+  selector:
+    matchLabels:
+      name: redis-0
   template:
     metadata:
       labels:
-        app: redis
+        name: redis-0
     spec:
       terminationGracePeriodSeconds: 10
       containers:
